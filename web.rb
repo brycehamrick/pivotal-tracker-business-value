@@ -2,12 +2,12 @@ require 'rubygems'
 require 'sinatra'
 require 'pivotal-tracker'
 
-enable :sessions
-
-#configure :production do
+configure do
+  enable :sessions
+  set :session_secret, ENV['SESSION_SECRET'] ||= 'super secret'
 #  require 'rack-ssl-enforcer'
 #  use Rack::SslEnforcer
-#end
+end
 
 PivotalTracker::Client.use_ssl = true
 
