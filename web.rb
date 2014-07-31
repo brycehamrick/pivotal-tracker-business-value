@@ -3,6 +3,8 @@ require 'sinatra'
 require 'pivotal-tracker'
 
 enable :sessions
+set :force_ssl, true
+
 PivotalTracker::Client.use_ssl = true
 
 get '/' do
