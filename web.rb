@@ -51,7 +51,7 @@ post '/updateStory' do
     else
       labels = ''
       if !story.labels.nil?
-        story.split(',').each do |label|
+        story.labels.split(',').each do |label|
           if !label.nil? && !label.empty?
             if !label.include? 'bv-'
               labels << ',' + label
