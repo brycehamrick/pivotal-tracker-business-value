@@ -3,7 +3,11 @@ require 'sinatra'
 require 'pivotal-tracker'
 
 enable :sessions
-set :force_ssl, true
+
+configure :production do
+  require 'rack-ssl-enforcer'
+  use Rack::SslEnforcer
+end
 
 PivotalTracker::Client.use_ssl = true
 
