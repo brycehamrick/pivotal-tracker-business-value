@@ -52,11 +52,15 @@ post '/updateStory' do
       labels = ''
       if !story.labels.nil?
         story.labels.each_line(',') do |label|
-          labels << ',' + label if !label.include? "bv-"
+          if !label.include? 'bv-'
+            labels << ',' + label
+          end
         end
       end
-      labels << ',' if !labels.empty? && !params[:bv].nil?
-      labels << 'bv-' + params[:bv] if !params[:bv].nil?
+      if !params[:bv].nil?
+        labels << ',' if !labels.empty?
+        labels << 'bv-' + params[:bv]
+      end
       "Labels: #{labels}"
     end
   end
