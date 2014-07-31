@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Projects</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link href="//d3jgo56a5b0my0.cloudfront.net/next/assets/next/next-612f36e2848fe7feeb7536f5610feda4.css" media="all" rel="stylesheet" type="text/css" />
+  </head>
+  <body id="tracker">
+    <div id="root" class="prod" tabindex="-1">
+      <div id="view23" class="layouts show normal">
+        <header class="main">
+          <div class="person_controls">
+            <div id="view27">
+              <nav class="links">
+                <ul>
+                  <li class="link_item menu person_name">
+                    <a>hamrickb</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <div class="logo_wrapper">
+            <h1 class="projects"><a class="logo" href="/"></a></h1>
+          </div>
+        </header>
+        <section class="main project">
+          <aside class="sidebar expanded">
+            <div class="sidebar_wrapper" id="view43">
+              <section class="sidebar_content scrollable">
+                <section class="project">
+                  <form action="#" onsubmit="tracker.preventDefault.apply(this,arguments)" class="panels">
+                    <ul class="items split">
+                    <% projects.each do |project| %>
+                      <li class="item my_work">
+                        <label>
+                        <a href="/project/<%= project.id %>" style="color:#fff; text-decoration:none;"><span class="panel_name"><%= project.name %></span></a>
+                        </label>
+                      </li>
+                      <% end %>
+                    </ul>
+                  </form>
+                </section>
+              </section>
+            </div>
+          </aside>
+          <article class="main">
+            <section class="panels">
+              <div class="table">
+                <div id="bvstories" class="panel" style="width: 800px;">
+                  <div class="container droppable">
+                    <header class="panel_header panel_controls">
+                      <div id="view3367">
+                        <h3 title="stories">
+                          <span class="ellipsis">stories</span>
+                        </h3>
+                      </div>
+                    </header>
+                    <section class="items_container hide_accepted_stories">
+                      <div class="items panel_content">
+                        <%
+                          @month = 'unfinished'
+                          stories.each do |story|
+                            if !story.accepted_at.nil? && story.accepted_at.strftime("%m-%Y") != @month
+                              @month = story.accepted_at.strftime("%m-%Y")
+                        %>
+                      <div  rel="iteration-<%= @month %>" class="iteration item">
+                        <header class="preview">
+                          
+                            <a class="expander expanded" rel="iteration-<%= @month %>">&nbsp;</a>
+                          
+                          <span class="number"></span>
+                          <time class="length"><%= @month %></time>
+
+                          <span class="points">
+                            Pts:
+                            
+                            <span class="total"></span>
+                          </span>
+                          
+                        </header>
+                      </div>
+                        <%
+                            elsif story.accepted_at.nil? && @month != 'unfinished'
+                              @month = 'unfinished'
+                        %>
+                      <div rel="iteration-<%= @month %>" class="iteration item">
+                        <header class="preview">
+                          
+                            <a class="expander expanded" rel="iteration-<%= @month %>">&nbsp;</a>
+                          
+                          <span class="number">18</span>
+                          <time class="length"><%= @month %></time>
+
+                          <span class="points">
+                            Pts:
+                            
+                            <span class="total">29</span>
+                          </span>
+                          
+                        </header>
+                      </div>
+                        <%
+                            end
+                            estimate = '-1'
+                            if !story.labels.nil?
+                              story.labels.each_line(',') do |label|
+                                if label.include? "bv-"
+                                  estimate = label[3]
+                                end
+                              end
+                            end
+                        %>
+                        <div rel="iteration-<%= @month %>" class="story model item feature estimate_<%= estimate %> is_estimatable <%= estimate.to_i > 0 ? 'unstarted' : 'started' %> point_scale_fibonacci">
+                          <header class="preview">
+                            <span class="meta"><span>-1</span></span>
+                            <form action="#" onsubmit="tracker.preventDefault.apply(this,arguments)">
+                              <span class="estimate">
+                              <label class="estimate_0" title="Estimate story as 0 points">
+                              0
+                              <input type="radio" value="0" data-type="number" name="story[estimate]">
+                              </label>
+                              <label class="estimate_1" title="Estimate story as 1 points">
+                              1
+                              <input type="radio" value="1" data-type="number" name="story[estimate]">
+                              </label>
+                              <label class="estimate_2" title="Estimate story as 2 points">
+                              2
+                              <input type="radio" value="2" data-type="number" name="story[estimate]">
+                              </label>
+                              <label class="estimate_3" title="Estimate story as 3 points">
+                              3
+                              <input type="radio" value="3" data-type="number" name="story[estimate]">
+                              </label>
+                              <label class="estimate_5" title="Estimate story as 5 points">
+                              5
+                              <input type="radio" value="5" data-type="number" name="story[estimate]">
+                              </label>
+                              <label class="estimate_8" title="Estimate story as 8 points">
+                              8
+                              <input type="radio" value="8" data-type="number" name="story[estimate]">
+                              </label>
+                              </span>
+                            </form>
+                            <span class="name tracker_markup">
+                              <div class="project_name"></div>
+                              <span class="pre labels">
+                              </span>
+                              <span class="story_name" onclick="window.open('https://www.pivotaltracker.com/story/show/<%= story.id %>')"><%= story.name %></span>
+                              <span class="post labels">
+                              </span>
+                            </span>
+                          </header>
+                          <section class="edit webkit" tabindex="-1"></section>
+                        </div>
+                        <% end %>
+                        <div class="end_of_list item" data-cid="c3413">
+                          <div class="preview"></div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </article>
+        </section>
+      </div>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function(){
+      var iterations = $('.iteration').length;
+      var currentIteration = 0;
+      $('.iteration').each(function(){
+        var iteration = $(this).attr('rel');
+
+        var totalStories = $('.story[rel="' + iteration + '"]').length;
+        $(this).find('.number').text(totalStories);
+
+        var totalPoints = 0;
+
+        $('.story[rel="' + iteration + '"]').each(function(){
+          if (!$(this).hasClass('estimate_-1')) {
+            var classes = $(this).attr('class');
+            var creg = /estimate\_([0-9])/ig;
+            var m = creg.exec(classes);
+            if (parseInt(m[1]) > 0)
+              totalPoints += parseInt(m[1]);
+          }
+        });
+
+        $(this).find('.points .total').text(totalPoints);
+
+        if (currentIteration++ < iterations - 2) {
+          $('.iteration .expander[rel="' + iteration + '"]').removeClass('expanded');
+          $('.story[rel="' + iteration + '"]').hide();
+        }
+      });
+      $('.iteration .preview .expander').click(function(){
+        if ($(this).hasClass('expanded')) {
+          $(this).removeClass('expanded');
+          $('.story[rel="' + $(this).attr('rel') + '"]').hide();
+        } else {
+          $(this).addClass('expanded');
+          $('.story[rel="' + $(this).attr('rel') + '"]').show();
+        }
+      });
+
+      $('#bvstories').addClass('visible');
+    });
+    </script>
+  </body>
+</html>
