@@ -29,8 +29,9 @@ post '/signin' do
 end
 
 get '/project/:project' do |pid|
-  PivotalTracker::Client.token = session[:token]
-  project = PivotalTracker::Project.find(pid)
-  stories = project.stories.all(:story_type => ['feature'], :current_state => ['unstarted', 'accepted', 'started', 'rejected'], :includedone => 'true')
-  erb :projects, :locals => { :projects => session[:projects], :stories => stories }
+  "Welcome to Project #{pid}"
+  #PivotalTracker::Client.token = session[:token]
+  #project = PivotalTracker::Project.find(pid)
+  #stories = project.stories.all(:story_type => ['feature'], :current_state => ['unstarted', 'accepted', 'started', 'rejected'], :includedone => 'true')
+  #erb :projects, :locals => { :projects => session[:projects], :stories => stories }
 end
