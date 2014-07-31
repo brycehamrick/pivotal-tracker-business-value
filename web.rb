@@ -4,10 +4,10 @@ require 'pivotal-tracker'
 
 enable :sessions
 
-configure :production do
-  require 'rack-ssl-enforcer'
-  use Rack::SslEnforcer
-end
+#configure :production do
+#  require 'rack-ssl-enforcer'
+#  use Rack::SslEnforcer
+#end
 
 PivotalTracker::Client.use_ssl = true
 
