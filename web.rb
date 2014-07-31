@@ -41,9 +41,9 @@ end
 
 post '/updateStory' do
   PivotalTracker::Client.token = session[:token]
-  project = PivotalTracker::Project.find(pid)
+  project = PivotalTracker::Project.find(params[:pid])
   if project.nil?
-    "Unable to retrieve project #{pid} <br /> #{project.inspect}"
+    "Unable to retrieve project #{params[:pid]} <br /> #{project.inspect}"
   else
     story =  project.stories.find(params[:sid])
     if story.nil?
