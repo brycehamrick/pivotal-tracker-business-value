@@ -51,7 +51,7 @@ post '/updateStory' do
     else
       labels = ''
       if !story.labels.nil?
-        story.labels.each_line(',') do |label|
+        story.split(',').each do |label|
           if !label.nil? && !label.empty?
             if !label.include? 'bv-'
               labels << ',' + label
@@ -63,7 +63,7 @@ post '/updateStory' do
         labels << ',' if !labels.empty?
         labels << 'bv-' + params[:bv]
       end
-      "Labels: #{labels}"
+      "Original: #{story.labels}          Processed: #{labels}"
     end
   end
 end
