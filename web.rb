@@ -64,7 +64,12 @@ post '/updateStory' do
         labels << ',' if !labels.empty?
         labels << 'bv-' + params[:bv]
       end
-      "Original: #{story.labels}          Processed: #{labels}"
+      if labels != story.labels
+        updateRes = story.update { :labels => labels }
+        "RESPONSE #{updateRes}"
+      else
+        "NO CHANGE"
+      end
     end
   end
 end
