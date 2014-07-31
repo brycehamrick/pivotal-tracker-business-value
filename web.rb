@@ -65,7 +65,7 @@ post '/updateStory' do
         labels << 'bv-' + params[:bv]
       end
       if labels != story.labels
-        updateRes = story.update { :labels => labels }
+        updateRes = story.update( :labels => labels )
         "RESPONSE #{updateRes}"
       else
         "NO CHANGE"
