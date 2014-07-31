@@ -32,7 +32,7 @@ get '/project/:project' do |pid|
   PivotalTracker::Client.token = session[:token]
   project = PivotalTracker::Project.find(pid)
   if project.nil?
-    "Unable to retrieve project #{pid}"
+    "Unable to retrieve project #{pid} <br /> #{project.inspect}"
   else
     stories = project.stories.all(:story_type => ['feature'], :current_state => ['unstarted', 'accepted', 'started', 'rejected'], :includedone => 'true')
     erb :projects, :locals => { :projects => session[:projects], :stories => stories }
