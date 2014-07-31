@@ -38,3 +38,26 @@ get '/project/:project' do |pid|
     erb :projects, :locals => { :projects => session[:projects], :stories => stories }
   end
 end
+
+post '/updateStory' do
+  PivotalTracker::Client.token = session[:token]
+  project = PivotalTracker::Project.find(pid)
+  if project.nil?
+    "Unable to retrieve project #{pid} <br /> #{project.inspect}"
+  else
+    story =  project.stories.find(params[:sid])
+    if story.nil?
+      "Unable to retrieve story #{sid} <br /> #{story.inspect}"
+    else
+      labels = ''
+      if !story.labels.nil?
+        story.labels.each_line(',') do |label|
+          labels << ',' + label if !label.include? "bv-"
+        end
+      end
+      labels << ',' if !labels.empty? && !params[:bv].nil?
+      labels << 'bv-' + params[:bv] if !params[:bv].nil?
+      "Labels: #{labels}"
+    end
+  end
+end
