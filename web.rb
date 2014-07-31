@@ -5,8 +5,8 @@ require 'pivotal-tracker'
 configure do
   enable :sessions
   set :session_secret, ENV['SESSION_SECRET'] ||= 'super secret'
-#  require 'rack-ssl-enforcer'
-#  use Rack::SslEnforcer
+  require 'rack-ssl-enforcer'
+  use Rack::SslEnforcer
 end
 
 PivotalTracker::Client.use_ssl = true
