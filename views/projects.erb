@@ -111,35 +111,17 @@
                               end
                             end
                         %>
-                        <div rel="iteration-<%= @month %>" class="story model item feature estimate_<%= estimate %> is_estimatable <%= estimate.to_i > 0 ? 'unstarted' : 'started' %> point_scale_fibonacci">
+                        <div rel="iteration-<%= @month %>" class="story model item feature estimate_<%= estimate %> is_estimatable <%= estimate.to_i > 0 ? 'unstarted' : 'started' %> point_scale_fibonacci" id="<%= story.id %>">
                           <header class="preview">
                             <span class="meta"><span>-1</span></span>
-                            <form action="#" onsubmit="tracker.preventDefault.apply(this,arguments)">
+                            <form>
                               <span class="estimate">
-                              <label class="estimate_0" title="Estimate story as 0 points">
-                              0
-                              <input type="radio" value="0" data-type="number" name="story[estimate]">
-                              </label>
-                              <label class="estimate_1" title="Estimate story as 1 points">
-                              1
-                              <input type="radio" value="1" data-type="number" name="story[estimate]">
-                              </label>
-                              <label class="estimate_2" title="Estimate story as 2 points">
-                              2
-                              <input type="radio" value="2" data-type="number" name="story[estimate]">
-                              </label>
-                              <label class="estimate_3" title="Estimate story as 3 points">
-                              3
-                              <input type="radio" value="3" data-type="number" name="story[estimate]">
-                              </label>
-                              <label class="estimate_5" title="Estimate story as 5 points">
-                              5
-                              <input type="radio" value="5" data-type="number" name="story[estimate]">
-                              </label>
-                              <label class="estimate_8" title="Estimate story as 8 points">
-                              8
-                              <input type="radio" value="8" data-type="number" name="story[estimate]">
-                              </label>
+                                <label class="estimate_0" title="Estimate story as 0 points">0</label>
+                                <label class="estimate_1" title="Estimate story as 1 points">1</label>
+                                <label class="estimate_2" title="Estimate story as 2 points">2</label>
+                                <label class="estimate_3" title="Estimate story as 3 points">3</label>
+                                <label class="estimate_5" title="Estimate story as 5 points">5</label>
+                                <label class="estimate_8" title="Estimate story as 8 points">8</label>
                               </span>
                             </form>
                             <span class="name tracker_markup">
@@ -205,6 +187,24 @@
           $(this).addClass('expanded');
           $('.story[rel="' + $(this).attr('rel') + '"]').show();
         }
+      });
+
+      $('span.estimate label').click(function(){
+        var story = $(this).parents('.story');
+        var bv = $(this).attr('class');
+        bv = bv.substr(-1);
+
+        var data = {
+          pid: <%= pid %>,
+          sid: story.attr('id')
+        }
+
+        if (parseInt(bv) > 0)
+          data.bv = bv;
+
+        $.post('/updateStory', data, function(result){
+          console.log(result);
+        });
       });
 
       $('#bvstories').addClass('visible');
