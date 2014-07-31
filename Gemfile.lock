@@ -26,6 +26,7 @@ GEM
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
+    rack-ssl-enforcer (0.2.8)
     rdoc (4.0.0)
     rest-client (1.6.8)
       mime-types (~> 1.16)
@@ -42,4 +43,5 @@ PLATFORMS
 
 DEPENDENCIES
   pivotal-tracker (= 0.5.12)
+  rack-ssl-enforcer (= 0.2.8)
   sinatra (= 1.4.5)
