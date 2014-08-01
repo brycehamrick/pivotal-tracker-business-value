@@ -152,14 +152,8 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript">
     $(function(){
-      var iterations = $('.iteration').length;
-      var currentIteration = 0;
-      $('.iteration').each(function(){
-        var iteration = $(this).attr('rel');
 
-        var totalStories = $('.story[rel="' + iteration + '"]').length;
-        $(this).find('.number').text(totalStories);
-
+      function setTotalPoints(iteration) {
         var totalPoints = 0;
 
         $('.story[rel="' + iteration + '"]').each(function(){
@@ -172,7 +166,18 @@
           }
         });
 
-        $(this).find('.points .total').text(totalPoints);
+        $('.iteration[rel="' + iteration + '"]').find('.points .total').text(totalPoints);
+      }
+
+      var iterations = $('.iteration').length;
+      var currentIteration = 0;
+      $('.iteration').each(function(){
+        var iteration = $(this).attr('rel');
+
+        var totalStories = $('.story[rel="' + iteration + '"]').length;
+        $(this).find('.number').text(totalStories);
+
+        setTotalPoints(iteration);        
 
         if (currentIteration++ < iterations - 2) {
           $('.iteration .expander[rel="' + iteration + '"]').removeClass('expanded');
@@ -222,6 +227,8 @@
           } else {
             story.removeClass('unstarted').addClass('started');
           }
+
+          setTotalPoints(story.attr('rel'));
         });
       });
 
