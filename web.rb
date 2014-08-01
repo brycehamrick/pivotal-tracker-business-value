@@ -49,27 +49,21 @@ post '/updateStory' do
     if story.nil?
       "Unable to retrieve story #{sid} <br /> #{story.inspect}"
     else
-      labels = ''
+      labels = Array.new
       if !story.labels.nil?
         story.labels.split(',').each do |label|
           if !label.nil? && !label.empty?
             if !label.include? 'bv-'
-              labels << ',' if !labels.empty?
               labels <<  label
             end
           end
         end
       end
       if !params[:bv].nil?
-        labels << ',' if !labels.empty?
         labels << 'bv-' + params[:bv]
       end
-      if labels != story.labels
-        updateRes = story.update( :labels => labels )
-        "RESPONSE #{updateRes}"
-      else
-        "NO CHANGE"
-      end
+      updateRes = story.update( :labels => labels )
+      "RESPONSE #{updateRes}"
     end
   end
 end
