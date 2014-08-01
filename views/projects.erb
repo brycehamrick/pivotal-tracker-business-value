@@ -203,7 +203,25 @@
           data.bv = bv;
 
         $.post('/updateStory', data, function(result){
-          console.log(result);
+          var estimate = 'estimate_' + result
+          story.removeClass(function(){
+            var toReturn = '',
+            classes = this.className.split(' ');
+            for(var i = 0; i < classes.length; i++ ) {
+              if( /estimate_/.test( classes[i] ) ) {
+                toReturn += classes[i] +' ';
+              }
+            }
+            return toReturn;
+          });
+
+          story.addClass(estimate);
+
+          if (parseInt(result) > 0) {
+            story.removeClass('started').addClass('unstarted');
+          } else {
+            story.removeClass('unstarted').addClass('started');
+          }
         });
       });
 
