@@ -31,6 +31,7 @@ end
 
 get '/project/:project' do |pid|
   PivotalTracker::Client.token = session[:token]
+  puts "Using token: #{session[:token][0,4]}...."
   project = PivotalTracker::Project.find(pid)
   if project.nil?
     "Unable to retrieve project #{pid} <br /> #{project.inspect}"
