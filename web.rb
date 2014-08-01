@@ -25,6 +25,7 @@ end
 post '/signin' do
   token = PivotalTracker::Client.token(params[:username], params[:password])
   session[:token] = token
+  session[:username] = params[:username]
   redirect '/'
 end
 
@@ -35,7 +36,7 @@ get '/project/:project' do |pid|
     "Unable to retrieve project #{pid} <br /> #{project.inspect}"
   else
     stories = project.stories.all(:story_type => ['feature'], :current_state => ['unstarted', 'accepted', 'started', 'rejected'], :includedone => 'true')
-    erb :projects, :locals => { :projects => session[:projects], :stories => stories, :pid => pid }
+    erb :projects, :locals => { :projects => session[:projects], :stories => stories, :pid => pid, :username => session[:username] }
   end
 end
 
