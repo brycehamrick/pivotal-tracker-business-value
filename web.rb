@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'sinatra'
 require 'pivotal-tracker'
-STDOUT.sync = true
 
 configure do
   enable :sessions
