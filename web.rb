@@ -31,22 +31,19 @@ end
 
 get '/project/:project' do |pid|
   PivotalTracker::Client.token = session[:token]
-  puts "Using token: #{session[:token][0,4]}...."
-  project = PivotalTracker::Project.find(pid)
-  if project.nil?
-    "Unable to retrieve project #{pid} <br /> #{project.inspect}"
-  else
-    stories = project.stories.all(:story_type => ['feature'], :current_state => ['unstarted', 'accepted', 'started', 'rejected'], :includedone => 'true')
+  projects = PivotalTracker::Project.all
+  if h = projects.find { |h| h.id.to_s == pid }
+    stories = h.stories.all(:story_type => ['feature'], :current_state => ['unstarted', 'accepted', 'started', 'rejected'], :includedone => 'true')
     erb :projects, :locals => { :projects => session[:projects], :stories => stories, :pid => pid, :username => session[:username] }
+  else
+    "Unable to retrieve project #{pid}"
   end
 end
 
 post '/updateStory' do
   PivotalTracker::Client.token = session[:token]
-  project = PivotalTracker::Project.find(params[:pid])
-  if project.nil?
-    "Unable to retrieve project #{params[:pid]} <br /> #{project.inspect}"
-  else
+  projects = PivotalTracker::Project.all
+  if project = projects.find { |project| project.id.to_s == params[:pid] }
     story =  project.stories.find(params[:sid])
     if story.nil?
       "Unable to retrieve story #{sid} <br /> #{story.inspect}"
@@ -71,5 +68,7 @@ post '/updateStory' do
       updateRes = story.update( :labels => labels )
       feedback
     end
+  else
+    "Unable to retrieve project #{params[:id]}"
   end
 end
