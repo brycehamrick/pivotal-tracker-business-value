@@ -6,7 +6,7 @@ configure do
   enable :sessions
   set :session_secret, ENV['SESSION_SECRET'] ||= 'super secret'
   require 'rack-ssl-enforcer'
-  use Rack::SslEnforcer
+  use Rack::SslEnforcer, :except_environments => 'development'
 end
 
 PivotalTracker::Client.use_ssl = true
